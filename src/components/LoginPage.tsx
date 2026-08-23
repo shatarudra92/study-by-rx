@@ -16,7 +16,10 @@ import {
   Eye,
   EyeOff,
   BookOpen,
-  PlayCircle
+  PlayCircle,
+  Copy,
+  Check,
+  ExternalLink
 } from 'lucide-react';
 import {
   auth,
@@ -48,7 +51,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme }) =>
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
+  const [domainCopied, setDomainCopied] = useState(false);
+
   const isDark = theme === 'dark' || theme === 'cosmic-dark';
+
+  const currentHostname = typeof window !== 'undefined' ? window.location.hostname : '';
+  const isUnauthorizedDomainError = errorMsg?.includes('auth/unauthorized-domain') || errorMsg?.includes('Domain Unauthorized');
 
   const formatFirebaseError = (err: any): string => {
     const code = err?.code || '';
@@ -71,6 +79,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme }) =>
         return 'Internet connection check karein.';
       default:
         return err?.message || 'Authentication error. Kripya dobara try karein.';
+    }
+  };
+
+  const handleCopyCurrentDomain = async () => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(currentHostname);
+      } else {
+        const input = document.createElement('input');
+        input.value = currentHostname;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+      }
+      setDomainCopied(true);
+      setTimeout(() => setDomainCopied(false), 3000);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -304,10 +331,67 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme }) =>
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mb-4 p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs flex items-start gap-2.5"
+                className="mb-4 space-y-2.5"
               >
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <span className="leading-relaxed font-medium">{errorMsg}</span>
+                <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-600 dark:text-red-400 text-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed font-medium">{errorMsg}</span>
+                </div>
+
+                {isUnauthorizedDomainError && (
+                  <div
+                    className={`p-3.5 rounded-2xl border text-xs space-y-2.5 ${
+                      isDark
+                        ? 'bg-amber-500/10 border-amber-500/30 text-amber-200'
+                        : 'bg-amber-50 border-amber-300 text-amber-900'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-bold text-[11px] uppercase tracking-wider text-amber-400">
+                        ⚡ Quick Fix for Domain Error
+                      </span>
+                      <a
+                        href="https://console.firebase.google.com/project/commanding-adviser-ldtd0/authentication/settings"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[11px] font-bold underline flex items-center gap-1 text-amber-400 hover:text-amber-300"
+                      >
+                        Firebase Console <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <code
+                        className={`flex-1 px-2.5 py-1.5 rounded-xl font-mono text-[11px] select-all border ${
+                          isDark
+                            ? 'bg-black/40 border-white/10 text-white'
+                            : 'bg-white border-amber-200 text-slate-800'
+                        }`}
+                      >
+                        {currentHostname}
+                      </code>
+                      <button
+                        type="button"
+                        onClick={handleCopyCurrentDomain}
+                        className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors shadow-sm"
+                      >
+                        {domainCopied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy Domain</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                    <p className="text-[11px] opacity-80">
+                      💡 Tip: Aap neeche <strong>Email &amp; Password</strong> se turant <strong>Sign Up / Login</strong> kar sakte hain bina wait kiye!
+                    </p>
+                  </div>
+                )}
               </motion.div>
             )}
             {successMsg && (
