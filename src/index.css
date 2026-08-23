@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-handwriting {
+    font-family: 'Kalam', 'Caveat', cursive, sans-serif;
+  }
+  .font-notes {
+    font-family: 'Patrick Hand', 'Kalam', cursive, sans-serif;
+  }
+  .font-caveat {
+    font-family: 'Caveat', cursive, sans-serif;
+  }
+}
+
+/* ── Custom Notebook Textures & Human Pen Inks ── */
+.paper-ruled-light {
+  background-color: #fcfbf7;
+  background-image: linear-gradient(#e8e2d5 1px, transparent 1px);
+  background-size: 100% 2.1rem;
+  background-position: 0 0.5rem;
+}
+
+.paper-grid-light {
+  background-color: #faf7f0;
+  background-image: 
+    linear-gradient(to right, rgba(210, 200, 185, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(210, 200, 185, 0.35) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.paper-ruled-dark {
+  background-color: #0b0f19;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 2.1rem;
+  background-position: 0 0.5rem;
+}
+
+.paper-grid-dark {
+  background-color: #090d16;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Realistic Multi-Pen Ink Injections ── */
+/* 🔴 Red Ink Pen */
+.pen-red-light {
+  color: #dc2626;
+  font-family: 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0.5px 0.5px rgba(220, 38, 38, 0.15);
+}
+.pen-red-dark {
+  color: #f87171;
+  font-family: 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.25);
+}
+
+/* 🔵 Blue Gel/Ballpoint Pen */
+.pen-blue-light {
+  color: #1d4ed8;
+  font-family: 'Patrick Hand', 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0.5px 0.5px rgba(29, 78, 216, 0.15);
+}
+.pen-blue-dark {
+  color: #60a5fa;
+  font-family: 'Patrick Hand', 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.25);
+}
+
+/* 🟢 Green Pen (Topper Tricks & Shortcuts) */
+.pen-green-light {
+  color: #15803d;
+  font-family: 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0.5px 0.5px rgba(21, 128, 61, 0.15);
+}
+.pen-green-dark {
+  color: #4ade80;
+  font-family: 'Kalam', cursive, sans-serif;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.25);
+}
+
+/* ⚫ Black Ink Pen */
+.pen-black-light {
+  color: #0f172a;
+  font-family: 'Patrick Hand', cursive, sans-serif;
+}
+.pen-black-dark {
+  color: #f1f5f9;
+  font-family: 'Patrick Hand', cursive, sans-serif;
+}
+
+/* ── Realistic Highlighters ── */
+.hl-yellow {
+  background: linear-gradient(104deg, rgba(254, 240, 138, 0.88) 0.9%, rgba(253, 224, 71, 0.95) 2.4%, rgba(254, 240, 138, 0.8) 98%);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: #1e293b;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hl-cyan {
+  background: linear-gradient(104deg, rgba(125, 211, 252, 0.88) 0.9%, rgba(56, 189, 248, 0.92) 2.4%, rgba(125, 211, 252, 0.75) 98%);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: #0f172a;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hl-green {
+  background: linear-gradient(104deg, rgba(134, 239, 172, 0.88) 0.9%, rgba(74, 222, 128, 0.92) 2.4%, rgba(134, 239, 172, 0.75) 98%);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: #052e16;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hl-pink {
+  background: linear-gradient(104deg, rgba(244, 114, 182, 0.82) 0.9%, rgba(244, 63, 94, 0.88) 2.4%, rgba(244, 114, 182, 0.75) 98%);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: #4c0519;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.hl-dark-yellow {
+  background: rgba(234, 179, 8, 0.25);
+  color: #fde047;
+  border-bottom: 2px solid #eab308;
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+}
+
+.hl-dark-cyan {
+  background: rgba(14, 165, 233, 0.25);
+  color: #7dd3fc;
+  border-bottom: 2px solid #0284c7;
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+}
+
+.hl-dark-green {
+  background: rgba(34, 197, 94, 0.25);
+  color: #86efac;
+  border-bottom: 2px solid #22c55e;
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+}
+
+.hl-dark-pink {
+  background: rgba(244, 63, 94, 0.25);
+  color: #fda4af;
+  border-bottom: 2px solid #f43f5e;
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+}
+
+/* Wavy Underline */
+.pen-underline-red {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #ef4444;
+  text-underline-offset: 4px;
+}
+
+.pen-underline-blue {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #3b82f6;
+  text-underline-offset: 4px;
+}
+
+.pen-underline-green {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #22c55e;
+  text-underline-offset: 4px;
+}
+
+/* Notebook tape / pin aesthetic */
+.notebook-tape {
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transform: rotate(-3deg);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+
+.dark ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.protected-view {
+  user-select: none;
+  -webkit-user-select: none;
+}

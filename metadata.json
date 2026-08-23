@@ -1,0 +1,6 @@
+{
+  "name": "NST RUDRA",
+  "description": "NST RUDRA - Handwritten notebook style study portal with in-app live & VOD HLS stream player, resolution switcher, multi-subject management, and study notes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
