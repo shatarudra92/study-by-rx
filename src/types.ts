@@ -100,3 +100,15 @@ export interface StudentStickyNote {
   createdAt: string;
   tag?: string;
 }
+
+export interface AppNotification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'live' | 'material' | 'test' | 'system';
+  timestamp: string;
+  read: boolean;
+  tag?: string;
+  linkText?: string;
+}
+

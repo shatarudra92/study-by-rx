@@ -24,6 +24,7 @@ import {
 import { ThemeMode } from '../types';
 import { TELEGRAM_LINK } from './TelegramModal';
 import { User } from '../lib/firebase';
+import { NotificationBell } from './NotificationBell';
 
 interface NavbarProps {
   theme: ThemeMode;
@@ -34,6 +35,8 @@ interface NavbarProps {
   onOpenTelegramModal: () => void;
   onOpenStreamModal?: () => void;
   onOpenDonationModal?: () => void;
+  onOpenNotes?: () => void;
+  onOpenLogin?: () => void;
   enrolledCount: number;
   onSelectFilter: (cat: string) => void;
   activeFilter: string;
@@ -51,6 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenTelegramModal,
   onOpenStreamModal,
   onOpenDonationModal,
+  onOpenNotes,
+  onOpenLogin,
   enrolledCount,
   onSelectFilter,
   activeFilter,
@@ -195,8 +200,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* Logged in User Profile & Logout (Desktop) */}
-          {user && (
+          {/* Study Material & Live Alerts Notification Bell */}
+          <NotificationBell theme={theme} onOpenNotes={onOpenNotes} />
+
+          {/* User Profile or Optional Login Button (Desktop) */}
+          {user ? (
             <div className="relative hidden sm:block">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -290,6 +298,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </AnimatePresence>
             </div>
+          ) : (
+            onOpenLogin && (
+              <button
+                onClick={onOpenLogin}
+                className="hidden sm:flex items-center gap-1.5 py-1.5 px-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 text-xs font-bold transition-all cursor-pointer"
+              >
+                <UserIcon className="w-3.5 h-3.5" />
+                <span>Student Login</span>
+              </button>
+            )
           )}
 
           {/* Mobile Search Toggle */}
@@ -409,7 +427,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             <div className="pt-2 flex flex-col gap-2">
-              {user && (
+              {user ? (
                 <div className={`p-2.5 rounded-xl border flex items-center justify-between gap-2 ${
                   isDark ? 'bg-white/5 border-white/10' : 'bg-amber-100/50 border-amber-200'
                 }`}>
@@ -441,6 +459,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                     Logout
                   </button>
                 </div>
+              ) : (
+                onOpenLogin && (
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenLogin();
+                    }}
+                    className="py-2.5 px-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/30 text-xs font-bold flex items-center justify-center gap-2"
+                  >
+                    <UserIcon className="w-4 h-4" />
+                    <span>Student Login / Account</span>
+                  </button>
+                )
               )}
 
               {onOpenDonationModal && (

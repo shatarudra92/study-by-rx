@@ -39,6 +39,7 @@ import { PdfViewerModal } from './components/PdfViewerModal';
 import { HandwrittenNotesPad } from './components/HandwrittenNotesPad';
 import { StreamUrlModal } from './components/StreamUrlModal';
 import { DonationModal } from './components/DonationModal';
+import { HomeDonationSection } from './components/HomeDonationSection';
 import { ToastContainer, ToastMessage } from './components/Toast';
 import { NetworkStatusIndicator, useNetworkStatus } from './components/NetworkStatusIndicator';
 
@@ -61,6 +62,7 @@ export default function App() {
   // Authentication State
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   // Network Status
   const { isOnline } = useNetworkStatus();
@@ -314,43 +316,6 @@ export default function App() {
   const liveCount = useMemo(() => courses.filter((c) => c.isLive).length, [courses]);
   const isDark = theme === 'dark' || theme === 'cosmic-dark';
 
-  // 1. Show smooth loading spinner while checking initial auth status
-  if (authLoading) {
-    return (
-      <div
-        className={`min-h-screen flex flex-col items-center justify-center p-6 ${
-          isDark ? 'bg-[#060913] text-white' : 'bg-[#faf8f2] text-slate-800'
-        }`}
-      >
-        <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-amber-500 via-orange-500 to-red-500 p-[2px] shadow-2xl shadow-amber-500/30 animate-bounce mb-4 flex items-center justify-center">
-          <div
-            className={`w-full h-full rounded-[22px] flex items-center justify-center text-2xl ${
-              isDark ? 'bg-[#0c1020]' : 'bg-[#fffef7]'
-            }`}
-          >
-            ✍️
-          </div>
-        </div>
-        <h2 className="text-xl font-black font-handwriting mb-1">NST RUDRA</h2>
-        <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-slate-500'} flex items-center gap-2`}>
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-          <span>Verifying Student Access...</span>
-        </p>
-      </div>
-    );
-  }
-
-  // 2. Gated Access: Require Login (Google or Email) before entering portal
-  if (!currentUser) {
-    return (
-      <>
-        <NetworkStatusIndicator theme={theme} onToast={addToast} />
-        <LoginPage theme={theme} onToggleTheme={toggleTheme} />
-        <ToastContainer toasts={toasts} onDismiss={removeToast} />
-      </>
-    );
-  }
-
   return (
     <div
       className={`min-h-screen flex flex-col transition-colors duration-300 ${
@@ -370,6 +335,8 @@ export default function App() {
         onOpenTelegramModal={() => setTelegramModalOpen(true)}
         onOpenStreamModal={() => setStreamUrlModalOpen(true)}
         onOpenDonationModal={() => setDonationModalOpen(true)}
+        onOpenNotes={() => setShowNotesPad(true)}
+        onOpenLogin={() => setLoginModalOpen(true)}
         enrolledCount={enrolledIds.length}
         onSelectFilter={setActiveFilter}
         activeFilter={activeFilter}
@@ -576,6 +543,9 @@ export default function App() {
               )}
             </div>
 
+            {/* Direct Home Donation Section with Dynamic QR Code */}
+            <HomeDonationSection theme={theme} onToast={addToast} />
+
             {/* Telegram Community Ribbon Banner */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
               <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#0088cc] via-[#0288d1] to-[#01579b] text-white shadow-xl shadow-sky-950/40 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
@@ -713,6 +683,17 @@ export default function App() {
         title={currentPdf.title}
         theme={theme}
       />
+
+      {/* Optional Student Login Modal */}
+      {loginModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md">
+          <LoginPage
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onClose={() => setLoginModalOpen(false)}
+          />
+        </div>
+      )}
 
       {/* Security & Notification Toasts */}
       <ToastContainer toasts={toasts} onDismiss={removeToast} />

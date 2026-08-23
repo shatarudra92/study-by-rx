@@ -19,7 +19,8 @@ import {
   PlayCircle,
   Copy,
   Check,
-  ExternalLink
+  ExternalLink,
+  X
 } from 'lucide-react';
 import {
   auth,
@@ -36,9 +37,10 @@ import { TELEGRAM_LINK } from './TelegramModal';
 interface LoginPageProps {
   theme: ThemeMode;
   onToggleTheme: () => void;
+  onClose?: () => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme }) => {
+export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme, onClose }) => {
   const [mode, setMode] = useState<'signin' | 'signup' | 'forgot'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -262,6 +264,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ theme, onToggleTheme }) =>
               : 'bg-[#fffefb]/95 border-amber-200/90 shadow-amber-900/10'
           }`}
         >
+          {/* Close button if in modal mode */}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors cursor-pointer"
+              title="Close and continue to Home"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
+
           {/* Top Stamp / Header */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black tracking-wider uppercase bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-amber-500/15 border border-amber-500/30 text-amber-500 dark:text-amber-300 mb-3">
